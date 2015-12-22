@@ -28,8 +28,8 @@
         </tbody>
 #}
         <tbody data-bind="foreach: results">
-            <tr data-bind="click: view">
-                <td data-bind="text: sample.name"></td>
+            <tr data-bind="click: $root.selectRow">
+                <td data-bind="text: sample().name"></td>
                 <td data-bind="text: epn"></td>
                 <td data-bind="text: type" style="text-transform: capitalize;"></td>
                 <td data-bind="text: resolution"></td>

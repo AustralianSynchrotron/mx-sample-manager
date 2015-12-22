@@ -29,7 +29,7 @@
             {% if not i%12 %}
                 <div style="clear:both;"></div>
             {% endif %}      
-            <a href="{{ url_for('holders_sample_add', _id=holder._id, pos=i)  if not samples[i] }}" title="{{x}}">
+            <a href="{{ url_for('.sample_add', _id=holder._id, pos=i)  if not samples[i] }}" title="{{x}}">
                 <div class="pin" {% if samples[i] %} style="background: #fff;" {% endif %}>{{letters[row]}}{{ col }}</div>
             </a>
         {% endfor %}        
@@ -55,7 +55,7 @@
             <td>{{letters[row]}}{{ col }}</td>
             <td>{{ sample.name }}</td>            
             <td>{{ sample.project.name }}</td>    
-            <td><a href="{{ url_for('holders_sample_remove_test', _id=holder._id, pos=position, sample_id=sample._id) }}" class="btn btn-danger btn-mini">&times; Remove</a></td>
+            <td><a href="{{ url_for('.sample_remove_test', _id=holder._id, pos=position, sample_id=sample._id) }}" class="btn btn-danger btn-mini">&times; Remove</a></td>
         </tr>
         {% endfor %}
     </tbody>

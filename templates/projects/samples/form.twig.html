@@ -8,7 +8,7 @@
         {{ render_field(form.priority) }}
         <div class="form-actions">
             <button type="submit"  class="btn btn-primary">{{ submit }}</button>
-            <a href="{{ url_for('projects_samples_list', project_id=project_id) }}">
+            <a href="{{ url_for('.samples_list', project_id=project_id) }}">
                 <button type="button" class="btn">Cancel</button>
             </a>
         </div>

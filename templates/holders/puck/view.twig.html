@@ -24,7 +24,7 @@
 
 <div class="puck">
     {% for i,x,y in coords %}
-    <a href="{{ url_for('holders_sample_add', _id=holder._id, pos=i) if not samples[i] }}" {% if samples[i] %} title="{{samples[i].name}}"{% endif %}>
+    <a href="{{ url_for('.sample_add', _id=holder._id, pos=i) if not samples[i] }}" {% if samples[i] %} title="{{samples[i].name}}"{% endif %}>
         <div class="puck_pin" style="top: {{ x }}px; left: {{ y }}px;{%
                 if samples[i]
             %} background: #fff; {% endif %}">
@@ -55,7 +55,7 @@
             <td>{{ position + 1 }}</td>
             <td>{{ sample.name }}</td>            
             <td>{{ sample.project.name }}</td>
-            <td><a href="{{ url_for('holders_sample_remove_test', _id=holder._id, pos=position, sample_id=sample._id) }}" class="btn btn-danger btn-mini">&times; Remove</a></td>
+            <td><a href="{{ url_for('.sample_remove_test', _id=holder._id, pos=position, sample_id=sample._id) }}" class="btn btn-danger btn-mini">&times; Remove</a></td>
         </tr>
         {% endfor %}
     </tbody>

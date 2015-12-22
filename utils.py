@@ -9,7 +9,7 @@ def templated(template=None):
             template_name = template
             if template_name is None:
                 template_name = request.endpoint \
-                    .replace('_', '/') + '.twig.html'
+                    .replace('.', '_').replace('_', '/') + '.twig.html'
             ctx = f(*args, **kwargs)
             if ctx is None:
                 ctx = {}

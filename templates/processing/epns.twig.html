@@ -4,7 +4,7 @@
     <h1>EPNs for {{ current_user.email }}</h1>
     <ul>
     {% for epn in current_user['EPNs'] %}
-        <li><a href="{{ url_for('processing_list', epn=epn) }}">{{ epn }}</a></li>
+        <li><a href="{{ url_for('processing.index', epn=epn) }}">{{ epn }}</a></li>
     {% endfor %}
     </ul>
 {% endblock %}

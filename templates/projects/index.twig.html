@@ -6,7 +6,7 @@
     </style>
     <h1> Projects </h1>
     {% include '_alerts.twig.html' %}
-    <a href="{{ url_for('projects_add') }}" class="btn btn-primary"><i class="icon-plus icon-white"></i> Add Project</a>
+    <a href="{{ url_for('.add') }}" class="btn btn-primary"><i class="icon-plus icon-white"></i> Add Project</a>
     <table id="projects" class="table table-hover">
         <thead>
             <tr>
@@ -19,9 +19,9 @@
             <tr>
                 <td>{{ project['name'] }}</td>
                 <td>
-                  <a href="{{ url_for('projects_samples_list', project_id=project['_id'])}}" class="btn btn-small"><i class="icon-th-list"></i> Samples</a>
-                  <a href="{{ url_for('projects_edit', _id=project['_id'])}}" class="btn btn-small"><i class="icon-edit"></i> Edit</a>
-                  <a href="{{ url_for('projects_delete', _id=project['_id'])}}" class="btn  btn-small btn-danger"><i class="icon-remove icon-white"></i> Delete</a>
+                  <a href="{{ url_for('.samples_list', project_id=project['_id'])}}" class="btn btn-small"><i class="icon-th-list"></i> Samples</a>
+                  <a href="{{ url_for('.edit', _id=project['_id'])}}" class="btn btn-small"><i class="icon-edit"></i> Edit</a>
+                  <a href="{{ url_for('.delete', _id=project['_id'])}}" class="btn  btn-small btn-danger"><i class="icon-remove icon-white"></i> Delete</a>
                 </td>
             </tr>
             {% endfor %}

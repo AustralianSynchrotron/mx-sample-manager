@@ -19,7 +19,7 @@
                 {{ sample['project']['name'] }}
             </td>            
             <td>
-                <a href="{{ url_for('holders_sample_add_test', _id=_id, pos=pos, sample_id=sample._id) }}" class="btn btn-primary btn-mini">Select</a>
+                <a href="{{ url_for('.sample_add_test', _id=_id, pos=pos, sample_id=sample._id) }}" class="btn btn-primary btn-mini">Select</a>
             </td>
         </tr>
         {% endfor %}

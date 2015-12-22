@@ -1,0 +1,65 @@
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Retrigger {{ item.sample }} - {{ item.type }}</h3>
+  </div>
+  <div class="modal-body">
+    <form id="retrigger_form">
+    <input type="hidden" name="dataset_id" value="{{item._id}}" />
+    <table class="table table-condensed table-bordered">
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>Old</th>
+          <th>New</th>
+        </tr>
+      </thead>
+      <tbody>
+<!--
+        <tr>
+          <td>Spacegroup:</td>
+          <td>{{ item.space_group}}</td>
+          <td><input type="text" name="spacegroup" placeholder="{{item.space_group}}"></td>
+        </tr>
+        <tr>
+          <td>Unitcell:</td>
+          <td>{{ item.unit_cell }}</td>
+          <td><input type="text" name="unitcell" placeholder="{{item.unit_cell}}"></td>
+        </tr>
+-->
+        <tr>
+          <td>Start Frame:</td>
+          <td>0</td>
+          <td><input type="text" name="first_frame" placeholder="0"></td>
+        </tr>
+        <tr>
+          <td>End Frame:</td>
+          <td>{{ item.no_frames }}</td>
+          <td><input type="text" name="last_frame" placeholder="{{ item.no_frames }}"></td>
+        </tr>
+
+        <tr>
+          <td>Low Res (cut off):</td>
+          <td></td>
+          <td><input type="text" name="low_resolution" placeholder="50"></td>
+        </tr>
+        <tr>
+          <td>High Res (cut-off):</td>
+          <td>{{ item.resolution }}</td>
+          <td><input type="text" name="high_resolution" placeholder="0"></td>
+        </tr>
+
+      </tbody>
+    </table>
+    <label class="checkbox"><input type="checkbox" name="ice" value="ice">Ice</label>
+    <label class="checkbox"><input type="checkbox" name="weak" value="weak">Weak</label>
+    <label class="checkbox"><input type="checkbox" name="slow" value="slow">Slow</label>
+    <label class="checkbox"><input type="checkbox" name="brute" value="brute">Brute</label>
+    </form>
+  </div>
+  <div id="dataset-footer" class="modal-footer" data-bind="with: selectedRow">
+    <button type="button" data-bind="click: $root.retriggerSubmit"class="btn btn-primary">Retrigger</button>
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+  </div>
+<script type="text/javascript">
+ko.applyBindings(pageViewModel, document.getElementById('dataset-footer'));
+</script>

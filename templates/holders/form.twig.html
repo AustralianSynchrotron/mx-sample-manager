@@ -7,7 +7,7 @@
         {{ render_field(form.type) }}
         <div class="form-actions">
             <button type="submit"  class="btn btn-primary">{{ submit }}</button>
-            <a href="{{ url_for('holders_list') }}">
+            <a href="{{ url_for('.index') }}">
                 <button type="button" class="btn">Cancel</button>
             </a>
         </div>
