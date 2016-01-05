@@ -27,6 +27,11 @@
             {% endfor %}
         </tbody>
 #}
+        <tbody data-bind="if: results().length == 0">
+            <tr>
+                <td colspan=9>No results available</td>
+            </tr>
+        </tbody>
         <tbody data-bind="foreach: results">
             <tr data-bind="click: $root.selectRow">
                 <td data-bind="text: sample().name"></td>
