@@ -107,8 +107,8 @@ from rq import Queue
 @processing.route("/retrigger/submit", methods=['POST'])
 def retrigger_submit():
     r = beamline.redis[beamline.current]
-    q = Queue('default', connection=r)
-    q.enqueue_call(func='jobs.testing.dataset',
+    q = Queue('autodatasetdev', connection=r)
+    q.enqueue_call(func='mx_auto_dataset',
                    kwargs=request.form.to_dict(flat=True),
                    timeout=1800)
     return jsonify(result=request.form['dataset_id'])
