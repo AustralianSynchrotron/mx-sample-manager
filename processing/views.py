@@ -86,7 +86,6 @@ def view(_id):
         context['field_other'].extend(['mosaicity', 'indexing_refined_rmsd'])
 
     template = 'processing/view_%s.twig.html' % str(item['type'])
-    print [template]
     try:
         return render_template(template, **context)
     except TemplateNotFound:
@@ -108,7 +107,7 @@ from rq import Queue
 def retrigger_submit():
     r = beamline.redis[beamline.current]
     q = Queue('autodatasetdev', connection=r)
-    q.enqueue_call(func='mx_auto_dataset',
+    q.enqueue_call(func='mx_auto_dataset.dataset',
                    kwargs=request.form.to_dict(flat=True),
                    timeout=1800)
     return jsonify(result=request.form['dataset_id'])
