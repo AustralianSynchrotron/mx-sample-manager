@@ -1,3 +1,4 @@
+{% from "_formhelpers.html" import render_unit_cell %}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>{{ item.sample }} - {{ item.type }}</h3>
@@ -8,7 +9,11 @@
     {% for key in field_other -%}
       <tr>
         <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
-        <td>{{ item[key] }}</td>
+        {% if item[key] is not string and item[key] is iterable %}
+          <td>{{ render_unit_cell(item[key]) }}</td>
+          {% else %}
+            <td>{{ item[key] }}</td>
+        {% endif %}
       </tr>
     {%- endfor %}
     </tbody>

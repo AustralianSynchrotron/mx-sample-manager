@@ -1,3 +1,4 @@
+{% from "_formhelpers.html" import render_unit_cell %}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>Retrigger {{ item.sample }} - {{ item.type }}</h3>
@@ -21,8 +22,8 @@
         </tr>
         <tr>
           <td>Unitcell:</td>
-          <td>{{ item.unit_cell }}</td>
-          <td><input type="text" name="unitcell" placeholder="{{item.unit_cell}}"></td>
+          <td>{{ render_unit_cell(item.unit_cell) }}</td>
+          <td><input type="text" name="unitcell" placeholder="{{render_unit_cell(item.unit_cell)}}"></td>
         </tr>
         <tr>
           <td>Start Frame:</td>
