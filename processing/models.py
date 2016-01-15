@@ -9,6 +9,7 @@ class Processing(Document):
 
     structure = {
         'sample': Sample,
+        'start_angle': float,
         'type': IS(u'indexing', u'dataset'),
         'epn': unicode,
         'resolution': float,

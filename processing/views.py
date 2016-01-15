@@ -70,12 +70,15 @@ def obj(_id):
 @templated()
 def view(_id):
     item = mongo.db.processing.find_one({'_id': _id})
+    collection = mongo.db.collections.find_one({'_id': item['collection_id'].id})
     started_at = localtime.normalize(_id.generation_time.astimezone(localtime))
     item['started_at'] = started_at.strftime('%Y-%m-%d %H:%M:%S %Z')
     item['sample'] = item['sample']['name']
+    item['start_angle'] = collection['start_angle']
 
     context = dict(item=item, keys=item.keys(), values=item.values())
-    context['field_other'] = ['epn', 'started_at', 'status', 'sample', 'directory', 'no_frames', 'last_frame', 'resolution', 'space_group', 'unit_cell', 'processing_dir']
+    context['field_other'] = ['epn', 'started_at', 'status', 'sample', 'directory', 'start_angle', 'no_frames',
+                              'last_frame', 'resolution', 'space_group', 'unit_cell', 'processing_dir']
 
     if str(item['type']) == 'dataset':
         context['field_order'] = [f for f in ['low_resolution_limit', 'high_resolution_limit', 'completeness', 'i/sigma', 'rmerge', 'rpim(i)', 'multiplicity'] if f in item.keys()]
