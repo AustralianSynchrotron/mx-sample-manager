@@ -18,7 +18,8 @@ class Processing(Document):
         'directory': unicode,
         'status': unicode,
         'success': bool,
-        'completed': bool
+        'completed': bool,
+        'processing_dir': unicode
     }
 
     required_fields = ['sample', 'type', 'epn']
