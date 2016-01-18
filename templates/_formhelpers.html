@@ -10,5 +10,7 @@
 {% endmacro %}
 
 {% macro render_unit_cell(unit_cell) %}
-{% set spaces=joiner(" ") %}{% for parameter in unit_cell %}{{ spaces() }}{{ parameter }}{% endfor %}
+    {% if unit_cell != None %}
+        {% set spaces=joiner(" ") %}{% for parameter in unit_cell %}{{ spaces() }}{{ parameter }}{% endfor %}
+    {% endif %}
 {% endmacro %}
