@@ -79,6 +79,8 @@ def view(_id):
     context = dict(item=item, keys=item.keys(), values=item.values())
     context['field_other'] = ['epn', 'started_at', 'status', 'sample', 'directory', 'start_angle', 'no_frames',
                               'last_frame', 'resolution', 'space_group', 'unit_cell', 'processing_dir']
+    context['field_retrigger'] = ['first_frame', 'last_frame', 'low_resolution', 'high_resolution', 'unit_cell',
+                                  'space_group', 'ice', 'weak', 'slow', 'brute']
 
     if str(item['type']) == 'dataset':
         context['field_order'] = [f for f in ['low_resolution_limit', 'high_resolution_limit', 'completeness', 'i/sigma', 'rmerge', 'rpim(i)', 'multiplicity'] if f in item.keys()]

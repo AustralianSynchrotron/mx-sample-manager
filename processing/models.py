@@ -1,7 +1,7 @@
 from flask.ext.mongokit import Document
 from mongokit import IS
 
-from ..projects.models import Sample
+from ..projects.models import Sample, Retrigger
 
 
 class Processing(Document):
@@ -20,7 +20,8 @@ class Processing(Document):
         'status': unicode,
         'success': bool,
         'completed': bool,
-        'processing_dir': unicode
+        'processing_dir': unicode,
+        'retrigger' : Retrigger
     }
 
     required_fields = ['sample', 'type', 'epn']

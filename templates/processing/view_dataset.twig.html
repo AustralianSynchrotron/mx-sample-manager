@@ -18,6 +18,28 @@
     {%- endfor %}
     </tbody>
   </table>
+
+{%  if item.retrigger is defined %}
+  <table class="table table-condensed table-bordered">
+    <tbody>
+    <tr><th>Retrigger parameter</th>
+    <th>Value</th></tr>
+    {% for key in field_retrigger %}
+      <tr>
+        <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
+        {% if item.retrigger[key] is not string and item.retrigger[key] is iterable and item.retrigger[key] is defined%}
+          <td>{{ render_unit_cell(item.retrigger[key]) }}</td>
+        {% elif item.retrigger[key] is not defined %}
+            <td> not set </td>
+        {% else %}
+            <td>{{ item.retrigger[key] }}</td>
+        {% endif %}
+      </tr>
+    {%- endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
   {% if field_order -%}
   <table class="table table-condensed table-bordered">
     <thead>
