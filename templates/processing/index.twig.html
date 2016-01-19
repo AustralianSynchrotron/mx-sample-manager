@@ -35,7 +35,7 @@
         </tbody>
         <!-- /ko -->
         <tbody data-bind="foreach: results">
-            <tr data-bind="click: $root.selectRow">
+            <tr data-bind="click: $root.selectRow, style: { backgroundColor: type() == 'dataset' ? '#ffffff' : '#dddddd' } ">
                 <td data-bind="text: sample().name"></td>
                 <td data-bind="text: epn"></td>
                 <td data-bind="text: type" style="text-transform: capitalize;"></td>
