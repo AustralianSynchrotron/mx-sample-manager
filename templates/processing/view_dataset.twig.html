@@ -6,7 +6,7 @@
 <div class="modal-body">
   <table class="table table-condensed">
     <tbody>
-    {% for key in field_other -%}
+    {% for key in field_processing_overall -%}
       <tr>
         <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
         {% if item[key] is not string and item[key] is iterable %}
@@ -19,10 +19,24 @@
     </tbody>
   </table>
 
+  {%  if field_collection %}
+  <table class="table table-condensed table-bordered">
+    <tbody>
+    <tr><th>Collection parameters</th></tr>
+    {% for key in field_collection -%}
+      <tr>
+        <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
+        <td>{{ item[key] }}</td>
+      </tr>
+    {%- endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
 {%  if item.retrigger is defined %}
   <table class="table table-condensed table-bordered">
     <tbody>
-    <tr><th>Retrigger parameter</th>
+    <tr><th>Retrigger parameters</th>
     <th>Value</th></tr>
     {% for key in field_retrigger %}
       <tr>

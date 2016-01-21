@@ -5,7 +5,7 @@
 <div class="modal-body">
   <table class="table table-condensed">
     <tbody>
-    {% for key in field_other -%}
+    {% for key in field_processing_overall -%}
       <tr>
         <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
         <td>{{ item[key] }}</td>
@@ -13,6 +13,21 @@
     {%- endfor %}
     </tbody>
   </table>
+
+  {%  if field_collection %}
+  <table class="table table-condensed table-bordered">
+    <tbody>
+    <tr><th>Collection parameters</th></tr>
+    {% for key in field_collection -%}
+      <tr>
+        <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
+        <td>{{ item[key] }}</td>
+      </tr>
+    {%- endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
   </div>
   <div class="modal-footer">
     <button type="button" data-dismiss="modal" class="btn">Close</button>
