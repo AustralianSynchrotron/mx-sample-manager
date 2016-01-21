@@ -75,10 +75,16 @@ def view(_id):
     item['started_at'] = started_at.strftime('%Y-%m-%d %H:%M:%S %Z')
     item['sample'] = item['sample']['name']
     item['start_angle'] = collection['start_angle']
+    item['exposure_time'] = collection['exposure_time']
+    item['attenuation'] = collection['attenuation_readback']
+    item['energy_readback'] = collection['energy_readback']
+    item['oscillation'] = collection['delta']
+    item['distance_readback'] = collection['distance_readback']
 
     context = dict(item=item, keys=item.keys(), values=item.values())
     context['field_other'] = ['epn', 'started_at', 'status', 'sample', 'directory', 'start_angle', 'no_frames',
-                              'last_frame', 'resolution', 'space_group', 'unit_cell', 'processing_dir']
+                              'last_frame', 'exposure_time', 'attenuation', 'energy_readback', 'oscillation',
+                              'distance_readback', 'resolution', 'space_group', 'unit_cell', 'processing_dir']
     context['field_retrigger'] = ['first_frame', 'last_frame', 'low_resolution', 'high_resolution', 'unit_cell',
                                   'space_group', 'ice', 'weak', 'slow', 'brute']
 
