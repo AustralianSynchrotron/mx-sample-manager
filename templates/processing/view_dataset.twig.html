@@ -1,4 +1,4 @@
-{% from "_formhelpers.html" import render_unit_cell %}
+{% from "_formhelpers.html" import render_unit_cell, render_unit_cell_units %}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>{{ item.sample }} - {{ item.type }}</h3>
@@ -10,7 +10,7 @@
       <tr>
         <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
         {% if item[key] is not string and item[key] is iterable %}
-          <td>{{ render_unit_cell(item[key]) }}</td>
+          <td>{{ render_unit_cell_units(item[key]) }}</td>
           {% else %}
             <td>{{ item[key] }} {%- if item[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
         {% endif %}
@@ -42,9 +42,9 @@
       <tr>
         <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
         {% if item.retrigger[key] is not string and item.retrigger[key] is iterable and item.retrigger[key] is defined%}
-          <td>{{ render_unit_cell(item.retrigger[key]) }}</td>
+          <td>{{ render_unit_cell_units(item.retrigger[key]) }}</td>
         {% elif item.retrigger[key] is not defined %}
-            <td> not set </td>
+            <td>not set </td>
         {% else %}
             <td>{{ item.retrigger[key] }} {%- if item.retrigger[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
         {% endif %}
