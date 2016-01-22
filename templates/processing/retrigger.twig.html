@@ -43,7 +43,7 @@
         </tr>
         <tr>
           <td>High Res (cut-off):</td>
-          <td>{{ item.resolution }}</td>
+          <td>{{ item.resolution }} {%- if item.resolution %} {{name_unit['resolution']}} {% endif -%}</td>
           <td><input type="text" name="high_resolution" placeholder="0"></td>
         </tr>
 

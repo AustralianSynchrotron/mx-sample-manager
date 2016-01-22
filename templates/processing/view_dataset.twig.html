@@ -12,7 +12,7 @@
         {% if item[key] is not string and item[key] is iterable %}
           <td>{{ render_unit_cell(item[key]) }}</td>
           {% else %}
-            <td>{{ item[key] }}</td>
+            <td>{{ item[key] }} {%- if item[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
         {% endif %}
       </tr>
     {%- endfor %}
@@ -26,7 +26,7 @@
     {% for key in field_collection -%}
       <tr>
         <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
-        <td>{{ item[key] }}</td>
+        <td>{{ item[key] }} {%- if item[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
       </tr>
     {%- endfor %}
     </tbody>
@@ -46,7 +46,7 @@
         {% elif item.retrigger[key] is not defined %}
             <td> not set </td>
         {% else %}
-            <td>{{ item.retrigger[key] }}</td>
+            <td>{{ item.retrigger[key] }} {%- if item.retrigger[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
         {% endif %}
       </tr>
     {%- endfor %}
@@ -68,9 +68,9 @@
    {% for key in field_order -%}
       <tr>
         <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
-        <td>{{ item[key][0] }}</td>
-        <td>{{ item[key][1] }}</td>
-        <td>{{ item[key][2] }}</td>
+        <td>{{ item[key][0] }} {%- if item[key][0] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
+        <td>{{ item[key][1] }} {%- if item[key][1] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
+        <td>{{ item[key][2] }} {%- if item[key][2] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
       <tr>
     {%- endfor %}
    </tbody>
