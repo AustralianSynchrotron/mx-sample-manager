@@ -106,7 +106,14 @@
     <button type="button" data-bind="click: $root.retrigger" class="btn btn-primary">Setup retriggering</button>
     <button type="button" data-dismiss="modal" class="btn">Close</button>
   </div>
-</div> 
+</div>
 <script type="text/javascript">
 ko.applyBindings(pageViewModel, document.getElementById('dataset-footer'));
+
+{#fix modal event propagation upon collapse
+TODO update to Bootstrap 3 for integrated fix - https://github.com/twbs/bootstrap/issues/2752#}
+$modal.find('.collapse').on('hide', function (event) {
+  event.stopPropagation()
+});
+
 </script>
