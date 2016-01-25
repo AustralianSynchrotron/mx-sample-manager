@@ -75,6 +75,19 @@ function resultViewModel(data) {
         return self._id().$oid;
     }
 
+    self.unit_cell = ko.computed(
+        {read: function() {
+            var unitcellstring = '';
+            var value;
+            for (value in this.unit_cell()) {
+                unitcellstring += " " + (this.unit_cell()[value]).toString();
+            }
+            return unitcellstring},
+
+        write: function() {
+            return 0;
+        }, owner:this});
+
     resultMap[self.id()] = self;
 }
 

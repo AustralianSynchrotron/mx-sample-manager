@@ -30,3 +30,20 @@ class Sample(Document):
     use_schemaless = True
     use_autorefs = True
     force_autorefs_current_db = True
+
+class Retrigger(Document):
+    __collection__ = 'retrigger'
+    structure = {
+        'first_frame' : int,
+        'last_frame' : int,
+        'low_resolution' : float,
+        'high_resolution': float,
+        'unit_cell': (float, float, float),
+        'space_group' : unicode,
+        'ice' : bool,
+        'weak' : bool,
+        'slow' : bool,
+        'brute' : bool
+    }
+    use_dot_notation = True
+    use_schemaless = True

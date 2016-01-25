@@ -1,3 +1,4 @@
+{% from "_formhelpers.html" import render_unit_cell, render_unit_cell_units %}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3>Retrigger {{ item.sample }} - {{ item.type }}</h3>
@@ -14,18 +15,16 @@
         </tr>
       </thead>
       <tbody>
-<!--
         <tr>
           <td>Spacegroup:</td>
           <td>{{ item.space_group}}</td>
-          <td><input type="text" name="spacegroup" placeholder="{{item.space_group}}"></td>
+          <td><input type="text" name="space_group" placeholder="{{item.space_group}}"></td>
         </tr>
         <tr>
           <td>Unitcell:</td>
-          <td>{{ item.unit_cell }}</td>
-          <td><input type="text" name="unitcell" placeholder="{{item.unit_cell}}"></td>
+          <td>{{ render_unit_cell_units(item.unit_cell) }}</td>
+          <td><input type="text" name="unit_cell" placeholder="{{item.unit_cell}}"></td>
         </tr>
--->
         <tr>
           <td>Start Frame:</td>
           <td>0</td>
@@ -44,7 +43,7 @@
         </tr>
         <tr>
           <td>High Res (cut-off):</td>
-          <td>{{ item.resolution }}</td>
+          <td>{{ item.resolution }} {%- if item.resolution %} {{name_unit['resolution']}} {% endif -%}</td>
           <td><input type="text" name="high_resolution" placeholder="0"></td>
         </tr>
 

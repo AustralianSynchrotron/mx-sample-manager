@@ -8,3 +8,15 @@
     </ul>
   {w% endif %} #}
 {% endmacro %}
+
+{% macro render_unit_cell_units(unit_cell) %}
+    {% if unit_cell != None -%}
+        {% set spaces=joiner(" ") %}{% for index in range(0,3) %}{{ spaces() }}{{ unit_cell[index]}}{{ "\u00c5" }}{% endfor %}
+        {% set spaces=joiner(" ") %}{% for index in range(3,6) %}{{ spaces() }}{{ unit_cell[index]}}{{ "\u00b0" }}{% endfor %}
+    {%- endif %}
+{% endmacro %}
+{% macro render_unit_cell(unit_cell) -%}
+    {% if unit_cell != None %}
+        {%- set spaces=joiner(" ") -%}{% for parameter in unit_cell %}{{ spaces() }}{{ parameter }}{% endfor %}
+    {% endif %}
+{%- endmacro %}

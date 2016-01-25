@@ -1,7 +1,7 @@
 from flask.ext.mongokit import Document
 from mongokit import IS
 
-from ..projects.models import Sample
+from ..projects.models import Sample, Retrigger
 
 
 class Processing(Document):
@@ -9,6 +9,7 @@ class Processing(Document):
 
     structure = {
         'sample': Sample,
+        'start_angle': float,
         'type': IS(u'indexing', u'dataset'),
         'epn': unicode,
         'resolution': float,
@@ -18,7 +19,9 @@ class Processing(Document):
         'directory': unicode,
         'status': unicode,
         'success': bool,
-        'completed': bool
+        'completed': bool,
+        'processing_dir': unicode,
+        'retrigger' : Retrigger
     }
 
     required_fields = ['sample', 'type', 'epn']

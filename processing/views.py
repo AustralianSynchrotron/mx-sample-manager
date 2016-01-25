@@ -5,6 +5,7 @@ from bson import ObjectId, json_util
 from .. import localtime
 from ..plugins import mongo, vbl, beamline
 from ..utils import templated, jsonify, request_wants_json
+from .. import config
 
 
 processing = Blueprint('processing', __name__, url_prefix='/processing')
@@ -70,23 +71,55 @@ def obj(_id):
 @templated()
 def view(_id):
     item = mongo.db.processing.find_one({'_id': _id})
+    collection = mongo.db.collections.find_one({'_id': item['collection_id'].id})
     started_at = localtime.normalize(_id.generation_time.astimezone(localtime))
     item['started_at'] = started_at.strftime('%Y-%m-%d %H:%M:%S %Z')
     item['sample'] = item['sample']['name']
 
-    context = dict(item=item, keys=item.keys(), values=item.values())
-    context['field_other'] = ['epn', 'started_at', 'status', 'sample', 'directory', 'no_frames', 'last_frame', 'resolution', 'space_group', 'unit_cell']
+    name_unit = {}
+    degree = u'\u00b0'
+    angstrom = u'\u00c5'
+    name_unit['start_angle'] = degree
+    name_unit['exposure_time'] = 's'
+    name_unit['attenuation'] = '%'
+    name_unit['energy'] = 'KeV'
+    name_unit['distance'] = 'mm'
+    name_unit['oscillation'] = degree
+    name_unit['resolution'] = angstrom
+    name_unit['average_mosaicity'] = degree
+    name_unit['mosaicity'] = degree
+    name_unit['low_resolution'] = angstrom
+    name_unit['high_resolution'] = angstrom
+    name_unit['low_resolution_limit'] = angstrom
+    name_unit['high_resolution_limit'] = angstrom
+    name_unit['completeness'] = '%'
+    name_unit['anomalous_completeness'] = '%'
+    name_unit['indexing_refined_rmsd'] = angstrom
+
+    item['start_angle'] = collection['start_angle']
+    item['exposure_time'] = collection['exposure_time']
+    item['attenuation'] = collection['attenuation_readback']
+    item['energy'] = collection['energy_readback']
+    item['oscillation'] = collection['delta']
+    item['distance'] = collection['distance_readback']
+
+    context = dict(item=item, keys=item.keys(), values=item.values(), name_unit=name_unit)
+    context['field_collection'] = ['epn', 'exposure_time', 'start_angle', 'oscillation', 'no_frames',
+                                   'last_frame', 'attenuation', 'energy', 'distance']
+    context['field_processing_overall'] = ['started_at', 'status', 'sample', 'directory', 'resolution', 'space_group',
+                                           'unit_cell', 'processing_dir']
+    context['field_retrigger'] = ['first_frame', 'last_frame', 'low_resolution', 'high_resolution', 'unit_cell',
+                                  'space_group', 'ice', 'weak', 'slow', 'brute']
 
     if str(item['type']) == 'dataset':
         context['field_order'] = [f for f in ['low_resolution_limit', 'high_resolution_limit', 'completeness', 'i/sigma', 'rmerge', 'rpim(i)', 'multiplicity'] if f in item.keys()]
         context['field_order'].extend(sorted([key for key, value in item.iteritems()
                                               if key not in context['field_order'] and isinstance(value, list) and len(value) <= 3]))
-        context['field_other'].append('average_mosaicity')
+        context['field_processing_overall'].append('average_mosaicity')
     if str(item['type']) == 'indexing':
-        context['field_other'].extend(['mosaicity', 'indexing_refined_rmsd'])
+        context['field_processing_overall'].extend(['mosaicity', 'indexing_refined_rmsd'])
 
     template = 'processing/view_%s.twig.html' % str(item['type'])
-    print [template]
     try:
         return render_template(template, **context)
     except TemplateNotFound:
@@ -99,7 +132,11 @@ def retrigger(_id):
     item = mongo.db.processing.find_one({'_id':_id})
     item['sample'] = item['sample']['name']
 
-    context = dict(item=item)
+    name_unit = {}
+    angstrom = u'\u00c5'
+    name_unit['resolution'] = angstrom
+
+    context = dict(item=item, name_unit=name_unit)
     return context
 
 from rq import Queue
@@ -107,8 +144,8 @@ from rq import Queue
 @processing.route("/retrigger/submit", methods=['POST'])
 def retrigger_submit():
     r = beamline.redis[beamline.current]
-    q = Queue('default', connection=r)
-    q.enqueue_call(func='jobs.testing.dataset',
+    q = Queue(config.REDIS_QUEUE_NAME, connection=r)
+    q.enqueue_call(func='mx_auto_dataset.dataset',
                    kwargs=request.form.to_dict(flat=True),
                    timeout=1800)
     return jsonify(result=request.form['dataset_id'])
