@@ -16,3 +16,6 @@ NAVIGATION['processing_list']  = 'Processing'
 
 # index redirect
 INDEX_ENDPOINT = 'processing_list'
+
+# redis queue name for retriggered job
+REDIS_QUEUE_NAME = 'autodataset'

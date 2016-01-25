@@ -5,6 +5,7 @@ from bson import ObjectId, json_util
 from .. import localtime
 from ..plugins import mongo, vbl, beamline
 from ..utils import templated, jsonify, request_wants_json
+from .. import config
 
 
 processing = Blueprint('processing', __name__, url_prefix='/processing')
@@ -143,7 +144,7 @@ from rq import Queue
 @processing.route("/retrigger/submit", methods=['POST'])
 def retrigger_submit():
     r = beamline.redis[beamline.current]
-    q = Queue('autodatasetdev', connection=r)
+    q = Queue(config.REDIS_QUEUE_NAME, connection=r)
     q.enqueue_call(func='mx_auto_dataset.dataset',
                    kwargs=request.form.to_dict(flat=True),
                    timeout=1800)
