@@ -145,7 +145,7 @@ from rq import Queue
 def retrigger_submit():
     r = beamline.redis[beamline.current]
     q = Queue(config.REDIS_QUEUE_NAME, connection=r)
-    q.enqueue_call(func='mx_auto_dataset.dataset',
+    q.enqueue_call(func='mx_auto_dataset.mx_auto_dataset.dataset',
                    kwargs=request.form.to_dict(flat=True),
                    timeout=1800)
     return jsonify(result=request.form['dataset_id'])
