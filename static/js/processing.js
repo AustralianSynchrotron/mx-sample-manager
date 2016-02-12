@@ -80,6 +80,10 @@ function resultViewModel(data) {
             var unitcellstring = '';
             var value;
             for (value in this.unit_cell()) {
+                if (!this.unit_cell()[value]) {
+                    console.log("unit cell parameter is ",this.unit_cell()[value])
+                    return
+                }
                 unitcellstring += " " + (this.unit_cell()[value]).toString();
             }
             return unitcellstring},
