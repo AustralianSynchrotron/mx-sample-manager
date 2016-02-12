@@ -15,7 +15,9 @@
             {% for key in field_processing_overall -%}
               <tr>
                 <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
-                {% if item[key] is not string and item[key] is iterable %}
+                {% if key not in item.keys() %}
+                  <td>(not determined)</td>
+                {% elif item[key] is not string and item[key] is iterable %}
                   <td>{{ render_unit_cell_units(item[key]) }}</td>
                   {% else %}
                     <td>{{ item[key] }} {%- if item[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>

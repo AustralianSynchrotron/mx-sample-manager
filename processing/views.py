@@ -71,7 +71,9 @@ def obj(_id):
 @templated()
 def view(_id):
     item = mongo.db.processing.find_one({'_id': _id})
-    collection = mongo.db.collections.find_one({'_id': item['collection_id'].id})
+
+    if str(item['type']) == 'dataset':
+        collection = mongo.db.collections.find_one({'_id': item['collection_id'].id})
     started_at = localtime.normalize(_id.generation_time.astimezone(localtime))
     item['started_at'] = started_at.strftime('%Y-%m-%d %H:%M:%S %Z')
     item['sample'] = item['sample']['name']
@@ -96,12 +98,13 @@ def view(_id):
     name_unit['anomalous_completeness'] = '%'
     name_unit['indexing_refined_rmsd'] = angstrom
 
-    item['start_angle'] = collection['start_angle']
-    item['exposure_time'] = collection['exposure_time']
-    item['attenuation'] = collection['attenuation_readback']
-    item['energy'] = collection['energy_readback']
-    item['oscillation'] = collection['delta']
-    item['distance'] = collection['distance_readback']
+    if str(item['type']) == 'dataset':
+        item['start_angle'] = collection['start_angle']
+        item['exposure_time'] = collection['exposure_time']
+        item['attenuation'] = collection['attenuation_readback']
+        item['energy'] = collection['energy_readback']
+        item['oscillation'] = collection['delta']
+        item['distance'] = collection['distance_readback']
 
     context = dict(item=item, keys=item.keys(), values=item.values(), name_unit=name_unit)
     context['field_collection'] = ['epn', 'exposure_time', 'start_angle', 'oscillation', 'no_frames',
