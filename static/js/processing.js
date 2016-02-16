@@ -75,7 +75,7 @@ function resultViewModel(data) {
         return self._id().$oid;
     }
 
-    self.unit_cell = ko.computed(
+    self.unit_cell_string = ko.computed(
         {read: function() {
             var unitcellstring = '';
             var value;
