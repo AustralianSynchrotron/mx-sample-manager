@@ -47,13 +47,13 @@
           {% endif %}
       </div>
 
+        {%  if item.retrigger is defined %}
       <h4>
         <a data-toggle="collapse" href="#collapseThree">
             Retrigger parameters
         </a>
       </h4>
       <div id="collapseThree" class="collapse">
-        {%  if item.retrigger is defined %}
           <table class="table table-condensed table-bordered">
             <tbody>
             <tr><th></th>
@@ -72,8 +72,8 @@
             {%- endfor %}
             </tbody>
           </table>
-        {% endif %}
       </div>
+      {% endif %}
 
       <h4>
         <a data-toggle="collapse" href="#collapseFour">
