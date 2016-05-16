@@ -5,6 +5,7 @@
     <table id="projects" class="table table-hover">
         <thead>
             <tr>
+                <th scope="col">Merge</th>
                 <th scope="col">Sample</th>
                 <th scope="col">EPN</th>
                 <th scope="col">Type</th>
@@ -35,15 +36,16 @@
         </tbody>
         <!-- /ko -->
         <tbody data-bind="foreach: results">
-            <tr data-bind="click: $root.selectRow, style: { backgroundColor: type() == 'dataset' ? '#ffffff' : '#eeeeee' } ">
-                <td data-bind="text: sample().name"></td>
-                <td data-bind="text: epn"></td>
-                <td data-bind="text: type" style="text-transform: capitalize;"></td>
-                <td data-bind="text: resolution"></td>
-                <td data-bind="text: space_group"></td>
-                <td data-bind="text: unit_cell_string"></td>
-                <td data-bind="text: no_frames"></td>
-                <td data-bind="text: directory"></td>
+            <tr data-bind="style: { backgroundColor: type() == 'dataset' ? '#ffffff' : '#eeeeee' } ">
+                <td><input type="checkbox" name = "is_merge" value=" text: id" data-bind="enable: type() == 'dataset'"></td>
+                <td data-bind="click: $root.selectRow, text: sample().name"></td>
+                <td data-bind="click: $root.selectRow, text: epn"></td>
+                <td data-bind="click: $root.selectRow, text: type" style="text-transform: capitalize;"></td>
+                <td data-bind="click: $root.selectRow, text: resolution"></td>
+                <td data-bind="click: $root.selectRow, text: space_group"></td>
+                <td data-bind="click: $root.selectRow, text: unit_cell_string"></td>
+                <td data-bind="click: $root.selectRow, text: no_frames"></td>
+                <td data-bind="click: $root.selectRow, text: directory"></td>
                 <td>
                     <span data-bind="text: status, css: resultStatus" class="label"></span>
                 </td>
