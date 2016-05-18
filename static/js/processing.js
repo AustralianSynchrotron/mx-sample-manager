@@ -46,10 +46,21 @@ function listViewModel() {
                           '</div>');
         });
     };
+    self.runMerge = function(results) {
+        var i=0, len = results.results().length, to_merge = {};
+        for (; i< len; ++i) {
+            result = results.results()[i];
+            if (result.merge()) {
+                to_merge[i] = (result.id());
+            }
+        }
+        return $.post('/processing/merging/submit', to_merge, 'json');
+    }
 }
 
 function resultViewModel(data) {
     var self = this;
+    self.merge = ko.observable(false);
 
     self.update = function(data) {
         $.each(data, function(index, value) {

@@ -1,6 +1,8 @@
 {% extends 'tmpl.twig.html' %}
 
 {% block content %}
+    <div class="navbar-inner"><button type="button" data-bind="click: $root.runMerge" class="btn btn-primary">Merge selected datasets</button>
+
     <h1>Processing</h1>
     <table id="projects" class="table table-hover">
         <thead>
@@ -37,7 +39,7 @@
         <!-- /ko -->
         <tbody data-bind="foreach: results">
             <tr data-bind="style: { backgroundColor: type() == 'dataset' ? '#ffffff' : '#eeeeee' } ">
-                <td><input type="checkbox" name = "is_merge" value=" text: id" data-bind="enable: type() == 'dataset'"></td>
+                <td><input type="checkbox" name = "is_merge" value=" text: id" data-bind="checked: merge, enable: type() == 'dataset'"></td>
                 <td data-bind="click: $root.selectRow, text: sample().name"></td>
                 <td data-bind="click: $root.selectRow, text: epn"></td>
                 <td data-bind="click: $root.selectRow, text: type" style="text-transform: capitalize;"></td>
@@ -49,11 +51,12 @@
                 <td>
                     <span data-bind="text: status, css: resultStatus" class="label"></span>
                 </td>
-                
+
             </tr>
         </tbody>
     </table>
     
     <div id="ajax-modal" class="modal hide fade" tabindex="-1" data-width="760"></div>
     <script src="{{ url_for('static', filename='js/processing.js') }}"></script>
+    </div>
 {% endblock %}
