@@ -152,12 +152,3 @@ def retrigger_submit():
                    kwargs=request.form.to_dict(flat=True),
                    timeout=1800)
     return jsonify(result=request.form['dataset_id'])
-
-
-@processing.route("/merging/submit", methods=['POST'])
-def merge_submit():
-    r = beamline.redis[beamline.current]
-
-    q = Queue(config.MERGE_REDIS_QUEUE_NAME, connection=r)
-    q.enqueue_call(func='jobs.merge', kwargs=request.values, timeout=3600)
-    return jsonify(result=request.values)
