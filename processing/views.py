@@ -162,5 +162,5 @@ def merge_submit():
     k = {}
     for key, value in request.values.items():
         k[key] = value
-    q.enqueue_call(func='jobs.merge', kwargs=request.values, timeout=3600)
+    q.enqueue_call(func=config.MERGE_REDIS_METHOD_NAME, kwargs=request.values, timeout=3600)
     return jsonify(result=request.values)

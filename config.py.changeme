@@ -19,3 +19,8 @@ INDEX_ENDPOINT = 'processing_list'
 
 # redis queue name for retriggered job
 REDIS_QUEUE_NAME = 'autodataset'
+
+# redis queue name for merge job
+MERGE_REDIS_QUEUE_NAME = 'merge'
+
+MERGE_REDIS_METHOD_NAME = 'jobs.merger'
