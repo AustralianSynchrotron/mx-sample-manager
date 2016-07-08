@@ -159,5 +159,8 @@ def merge_submit():
     r = beamline.redis[beamline.current]
 
     q = Queue(config.MERGE_REDIS_QUEUE_NAME, connection=r)
+    k = {}
+    for key, value in request.values.items():
+        k[key] = value
     q.enqueue_call(func='jobs.merge', kwargs=request.values, timeout=3600)
     return jsonify(result=request.values)
