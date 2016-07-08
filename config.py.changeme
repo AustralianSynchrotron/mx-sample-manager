@@ -24,3 +24,14 @@ REDIS_QUEUE_NAME = 'autodataset'
 MERGE_REDIS_QUEUE_NAME = 'merge'
 
 MERGE_REDIS_METHOD_NAME = 'jobs.merger'
+
+BEAMLINE_NETWORKS = {
+    'MX1':'10.109.0.0/16',
+    'MX2':'10.108.0.0/16'
+}
+
+BEAMLINE_REDIS = {
+    'MX1':'10.109.24.10',
+    'MX2':'10.108.24.10'
+}
+
