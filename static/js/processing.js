@@ -53,6 +53,9 @@ function listViewModel() {
             if (result.merge()) {
                 to_merge[i] = (result.id());
             }
+            if (result.reference()) {
+                to_merge['reference'] = (result.id());
+            }
         }
         return $.post('/processing/merging/submit', to_merge, 'json');
     }
@@ -61,6 +64,7 @@ function listViewModel() {
 function resultViewModel(data) {
     var self = this;
     self.merge = ko.observable(false);
+    self.reference = ko.observable(false);
 
     self.update = function(data) {
         $.each(data, function(index, value) {

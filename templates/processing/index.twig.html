@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th scope="col">Merge</th>
+                <th scope="col">Reference</th>
                 <th scope="col">Sample</th>
                 <th scope="col">EPN</th>
                 <th scope="col">Type</th>
@@ -40,6 +41,7 @@
         <tbody data-bind="foreach: results">
             <tr data-bind="style: { backgroundColor: type() == 'dataset' ? '#ffffff' : '#eeeeee' } ">
                 <td><input type="checkbox" name = "is_merge" value=" text: id" data-bind="checked: merge, enable: type() == 'dataset'"></td>
+                <td><input type="checkbox" name = "is_reference" value=" text: id" data-bind="checked: reference, enable: type() == 'dataset'"></td>
                 <td data-bind="click: $root.selectRow, text: sample().name"></td>
                 <td data-bind="click: $root.selectRow, text: epn"></td>
                 <td data-bind="click: $root.selectRow, text: type" style="text-transform: capitalize;"></td>
