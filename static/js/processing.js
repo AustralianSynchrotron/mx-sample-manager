@@ -58,7 +58,21 @@ function listViewModel() {
         if (self.reference) {
             to_merge['reference'] = (self.reference());
         }
-        return $.post('/processing/merging/submit', to_merge, 'json');
+        return $.post('/processing/merging/submit', to_merge, function() {
+            $modal.modal('show')
+                  .prepend('<div class="alert alert-success fade in">' +
+                           'Submitted merging request!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                           '</div>');
+            setTimeout(function() {
+                $modal.modal('hide');
+            }, 2000);
+        },'json')
+            .fail(function() {
+                $modal.modal('show')
+                 .prepend('<div class="alert alert-error fade in">' +
+                          'Failed to submit for merging!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                          '</div>');
+        });
     }
 }
 
