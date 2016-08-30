@@ -12,6 +12,7 @@
                 <th scope="col">Sample</th>
                 <th scope="col">EPN</th>
                 <th scope="col">Type</th>
+                <th scope="col">Subtype</th>
                 <th scope="col">Resolution</th>
                 <th scope="col">Space Group</th>
                 <th scope="col">Unit Cell</th>
@@ -45,6 +46,12 @@
                 <td data-bind="click: $root.selectRow, text: sample().name"></td>
                 <td data-bind="click: $root.selectRow, text: epn"></td>
                 <td data-bind="click: $root.selectRow, text: type" style="text-transform: capitalize;"></td>
+                <!-- ko if: $data.hasOwnProperty("subtype") -->
+                    <td data-bind="click: $root.selectRow, text: subtype"></td>
+                <!-- /ko -->
+                <!-- ko ifnot: $data.hasOwnProperty("subtype") -->
+                    <td>-</td>
+                <!-- /ko -->
                 <td data-bind="click: $root.selectRow, text: resolution"></td>
                 <td data-bind="click: $root.selectRow, text: space_group"></td>
                 <td data-bind="click: $root.selectRow, text: unit_cell_string"></td>

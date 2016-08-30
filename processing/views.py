@@ -28,7 +28,8 @@ def index():
 
     if request_wants_json():
         query = {'epn':  request.args.get('epn', beamline.EPN),
-                 'type': request.args.get('type')}
+                 'type': request.args.get('type'), 
+                 'subtype': request.args.get('subtype')}
         query = {k: v for k, v in query.iteritems() if v}
 
         cursor = mongo.db.processing.find(query).sort('_id', -1)
