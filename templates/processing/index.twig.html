@@ -1,7 +1,7 @@
 {% extends 'tmpl.twig.html' %}
 
 {% block content %}
-    <div class="navbar-inner"><button type="button" data-bind="click: $root.runMerge" class="btn btn-primary">Merge selected datasets</button>
+    <div class="navbar-inner"><button type="button" data-bind="click: $root.runMerge" class="btn btn-primary">Merge selected datasets</button><button type="button" data-bind="click: $root.clearFlags">Clear merging and reference flags</button>
 
     <h1>Processing</h1>
     <table id="projects" class="table table-hover">

@@ -77,6 +77,14 @@ function listViewModel() {
                           '</div>');
         });
     }
+    self.clearFlags = function(results) {
+        var i=0, len = results.results().length;
+        for (; i< len; ++i) {
+            result = results.results()[i];
+            result.merge(false);
+            result.reference(false);
+        }
+    }
 }
 
 function resultViewModel(data, reference) {
