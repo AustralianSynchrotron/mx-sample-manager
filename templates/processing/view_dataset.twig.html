@@ -95,10 +95,10 @@
            {% for key in field_order -%}
               {% if not key.startswith('_') %}
               <tr>
-                <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
-                <td>{{ item[key][0] }} {%- if item[key][0] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
-                <td>{{ item[key][1] }} {%- if item[key][1] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
-                <td>{{ item[key][2] }} {%- if item[key][2] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
+                <td style="text-transform: capitalize;">{{ key|replace('_', ' ')}} {%- if item[key][0] and item[key][1] and item[key][2] and name_unit[key] %} ({{ name_unit[key] }}) {% endif -%}</td>
+                <td>{{ item[key][0] }}</td>
+                <td>{{ item[key][1] }}</td>
+                <td>{{ item[key][2] }}</td>
               <tr>
               {% endif %}
             {%- endfor %}
