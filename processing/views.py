@@ -28,7 +28,8 @@ def index():
 
     if request_wants_json():
         query = {'epn':  request.args.get('epn', beamline.EPN),
-                 'type': request.args.get('type')}
+                 'type': request.args.get('type'), 
+                 'subtype': request.args.get('subtype')}
         query = {k: v for k, v in query.iteritems() if v}
 
         cursor = mongo.db.processing.find(query).sort('_id', -1)
@@ -72,8 +73,11 @@ def obj(_id):
 def view(_id):
     item = mongo.db.processing.find_one({'_id': _id})
 
-    if str(item['type']) == 'dataset':
+    try:
         collection = mongo.db.collections.find_one({'_id': item['collection_id'].id})
+    except KeyError:
+        # expected if no collection is available - for visits before now
+        collection = None
     started_at = localtime.normalize(_id.generation_time.astimezone(localtime))
     item['started_at'] = started_at.strftime('%Y-%m-%d %H:%M:%S %Z')
     item['sample'] = item['sample']['name']
@@ -98,7 +102,7 @@ def view(_id):
     name_unit['anomalous_completeness'] = '%'
     name_unit['indexing_refined_rmsd'] = angstrom
 
-    if str(item['type']) == 'dataset':
+    if collection is not None:
         item['start_angle'] = collection['start_angle']
         item['exposure_time'] = collection['exposure_time']
         item['attenuation'] = collection['attenuation_readback']

@@ -8,7 +8,8 @@ function listViewModel() {
     self.results = ko.observableArray();
     self.selectedRow = ko.observable();
     
-    
+    self.reference = ko.observable(false);
+
     self.selectRow = function(row) {
         self.selectedRow(row);
         
@@ -46,10 +47,39 @@ function listViewModel() {
                           '</div>');
         });
     };
+    self.runMerge = function(results) {
+        var i=0, len = results.results().length, to_merge = {};
+        for (; i< len; ++i) {
+            result = results.results()[i];
+            if (result.merge()) {
+                to_merge[i] = (result.id());
+            }
+        }
+        if (self.reference) {
+            to_merge['reference'] = (self.reference());
+        }
+        return $.post('/processing/merging/submit', to_merge, function() {
+            $modal.modal('show')
+                  .prepend('<div class="alert alert-success fade in">' +
+                           'Submitted merging request!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                           '</div>');
+            setTimeout(function() {
+                $modal.modal('hide');
+            }, 2000);
+        },'json')
+            .fail(function() {
+                $modal.modal('show')
+                 .prepend('<div class="alert alert-error fade in">' +
+                          'Failed to submit for merging!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                          '</div>');
+        });
+    }
 }
 
-function resultViewModel(data) {
+function resultViewModel(data, reference) {
     var self = this;
+    self.merge = ko.observable(false);
+    self.reference = reference;
 
     self.update = function(data) {
         $.each(data, function(index, value) {
@@ -107,7 +137,7 @@ $(document).ready(function() {
                 if (resultMap.hasOwnProperty(_id)) {
                     resultMap[_id].update(value);
                 } else {
-                    pageViewModel.results.unshift(new resultViewModel(value))
+                    pageViewModel.results.unshift(new resultViewModel(value, pageViewModel.reference))
                 }
             });          
 

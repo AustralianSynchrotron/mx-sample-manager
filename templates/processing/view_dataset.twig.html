@@ -1,7 +1,7 @@
 {% from "_formhelpers.html" import render_unit_cell, render_unit_cell_units %}
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>{{ item.sample }} - {{ item.type }}</h3>
+    <h3>{{ item.sample }} - {{ item.type }} - {{ item.subtype }}</h3>
   </div>
 <div class="modal-body">
       <h4>
@@ -47,13 +47,13 @@
           {% endif %}
       </div>
 
+        {%  if item.retrigger is defined %}
       <h4>
         <a data-toggle="collapse" href="#collapseThree">
             Retrigger parameters
         </a>
       </h4>
       <div id="collapseThree" class="collapse">
-        {%  if item.retrigger is defined %}
           <table class="table table-condensed table-bordered">
             <tbody>
             <tr><th></th>
@@ -72,8 +72,8 @@
             {%- endfor %}
             </tbody>
           </table>
-        {% endif %}
       </div>
+      {% endif %}
 
       <h4>
         <a data-toggle="collapse" href="#collapseFour">
