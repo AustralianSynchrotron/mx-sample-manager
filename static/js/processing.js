@@ -55,8 +55,11 @@ function listViewModel() {
                 to_merge[i] = (result.id());
             }
         }
-        if (self.reference) {
+        if (self.reference()) {
             to_merge['reference'] = (self.reference());
+        }
+        else {
+            to_merge['reference'] = to_merge[0];
         }
         return $.post('/processing/merging/submit', to_merge, function() {
             $modal.modal('show')
