@@ -91,6 +91,7 @@ def view(_id):
     name_unit['energy'] = 'KeV'
     name_unit['distance'] = 'mm'
     name_unit['oscillation'] = degree
+    name_unit['wedge'] = degree
     name_unit['resolution'] = angstrom
     name_unit['average_mosaicity'] = degree
     name_unit['mosaicity'] = degree
@@ -111,7 +112,7 @@ def view(_id):
         item['distance'] = collection['distance_readback']
 
     context = dict(item=item, keys=item.keys(), values=item.values(), name_unit=name_unit)
-    context['field_collection'] = ['epn', 'exposure_time', 'start_angle', 'oscillation', 'no_frames',
+    context['field_collection'] = ['epn', 'exposure_time', 'start_angle', 'oscillation', 'no_frames', 'wedge',
                                    'last_frame', 'attenuation', 'energy', 'distance']
     context['field_processing_overall'] = ['started_at', 'status', 'sample', 'directory', 'resolution', 'space_group',
                                            'unit_cell', 'processing_dir']
