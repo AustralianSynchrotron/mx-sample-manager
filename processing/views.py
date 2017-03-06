@@ -106,6 +106,7 @@ def view(_id):
     if collection is not None:
         item['start_angle'] = collection['start_angle']
         item['exposure_time'] = collection['exposure_time']
+        item['wedge'] = collection['wedge']
         item['attenuation'] = collection['attenuation_readback']
         item['energy'] = collection['energy_readback']
         item['oscillation'] = collection['delta']
