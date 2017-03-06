@@ -120,7 +120,7 @@ def view(_id):
     context['field_collection'] = ['epn', 'exposure_time', 'start_angle', 'oscillation', 'no_frames', 'wedge',
                                    'last_frame', 'attenuation', 'energy', 'distance']
     context['field_processing_overall'] = ['started_at', 'status', 'sample', 'directory', 'resolution', 'space_group',
-                                           'unit_cell', 'processing_dir']
+                                           'unit_cell', 'processing_dir', 'run_label']
     context['field_retrigger'] = ['first_frame', 'last_frame', 'low_resolution', 'high_resolution', 'unit_cell',
                                   'space_group', 'ice', 'weak', 'slow', 'brute']
 

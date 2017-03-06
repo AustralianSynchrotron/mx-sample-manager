@@ -17,6 +17,7 @@
                 <th scope="col">Space Group</th>
                 <th scope="col">Unit Cell</th>
                 <th scope="col">No. Frames</th>
+                <th scope="col">Run Label</th>
                 <th scope="col">Directory</th>
                 <th scope="col">Status</th>
             </tr>
@@ -56,6 +57,12 @@
                 <td data-bind="click: $root.selectRow, text: space_group"></td>
                 <td data-bind="click: $root.selectRow, text: unit_cell_string"></td>
                 <td data-bind="click: $root.selectRow, text: no_frames"></td>
+                <!-- ko if: $data.hasOwnProperty("run_label") -->
+                    <td data-bind="click: $root.selectRow, text: run_label"></td>
+                <!-- /ko -->
+                <!-- ko ifnot: $data.hasOwnProperty("run_label") -->
+                     <td>-</td>
+                <!-- /ko -->
                 <td data-bind="click: $root.selectRow, text: directory"></td>
                 <td>
                     <span data-bind="text: status, css: resultStatus" class="label"></span>
