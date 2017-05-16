@@ -1,0 +1,123 @@
+{% from "_formhelpers.html" import render_unit_cell, render_unit_cell_units %}
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>{{ item.sample }} - {{ item.type }} - {{ item.subtype }}</h3>
+  </div>
+<div class="modal-body">
+      <h4>
+        <a data-toggle="collapse" href="#collapseOne">
+        Screening summary
+        </a>
+      </h4>
+      <div id="collapseOne" class="collapse in">
+          <table class="table table-condensed">
+            <tbody>
+            {% for key in field_processing_overall -%}
+              <tr>
+                <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
+                {% if key not in item.keys() %}
+                  <td>(not determined)</td>
+                {% elif item[key] is not string and item[key] is iterable %}
+                  <td>{{ render_unit_cell_units(item[key]) }}</td>
+                  {% else %}
+                    <td>{{ item[key] }} {%- if item[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
+                {% endif %}
+              </tr>
+            {%- endfor %}
+            </tbody>
+          </table>
+      </div>
+      <h4>
+          <a data-toggle="collapse" href="#collapseTwo">
+            Collection parameters
+          </a>
+      </h4>
+      <div id="collapseTwo" class="collapse">
+          {%  if field_collection %}
+          <table class="table table-condensed table-bordered">
+            <tbody>
+            {% for key in field_collection -%}
+              <tr>
+                <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
+                <td>{{ item[key] }} {%- if item[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
+              </tr>
+            {%- endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+      </div>
+
+        {%  if item.retrigger is defined %}
+      <h4>
+        <a data-toggle="collapse" href="#collapseThree">
+            Retrigger parameters
+        </a>
+      </h4>
+      <div id="collapseThree" class="collapse">
+          <table class="table table-condensed table-bordered">
+            <tbody>
+            <tr><th></th>
+            <th>Value</th></tr>
+            {% for key in field_retrigger %}
+              <tr>
+                <td style="text-transform: capitalize;">{{ key|replace('_', ' ') }}</td>
+                {% if item.retrigger[key] is not string and item.retrigger[key] is iterable and item.retrigger[key] is defined%}
+                  <td>{{ render_unit_cell_units(item.retrigger[key]) }}</td>
+                {% elif item.retrigger[key] is not defined %}
+                    <td>not set </td>
+                {% else %}
+                    <td>{{ item.retrigger[key] }} {%- if item.retrigger[key] and name_unit[key] %} {{ name_unit[key] }} {% endif -%}</td>
+                {% endif %}
+              </tr>
+            {%- endfor %}
+            </tbody>
+          </table>
+      </div>
+      {% endif %}
+
+      <h4>
+        <a data-toggle="collapse" href="#collapseFour">
+          Screening results
+        </a>
+      </h4>
+      <div id="collapseFour" class="collapse in">
+          {% if field_order -%}
+          <table class="table table-condensed table-bordered">
+            <thead>
+              <tr>
+                <th>&nbsp;</th>
+                <th>Overall</th>
+                <th>Low</th>
+                <th>High</th>
+              </tr>
+            </thead>
+            <tbody>
+           {% for key in field_order -%}
+              {% if not key.startswith('_') %}
+              <tr>
+                <td style="text-transform: capitalize;">{{ key|replace('_', ' ')}} {%- if item[key][0] and item[key][1] and item[key][2] and name_unit[key] %} ({{ name_unit[key] }}) {% endif -%}</td>
+                <td>{{ item[key][0] }}</td>
+                <td>{{ item[key][1] }}</td>
+                <td>{{ item[key][2] }}</td>
+              <tr>
+              {% endif %}
+            {%- endfor %}
+           </tbody>
+          </table>
+          {%- endif %}
+      </div>
+  <div id="dataset-footer" class="modal-footer" data-bind="with: selectedRow">
+    <button type="button" data-bind="click: $root.retrigger" class="btn btn-primary">Setup retriggering</button>
+    <button type="button" data-dismiss="modal" class="btn">Close</button>
+  </div>
+</div>
+<script type="text/javascript">
+ko.applyBindings(pageViewModel, document.getElementById('dataset-footer'));
+
+{#fix modal event propagation upon collapse
+TODO update to Bootstrap 3 for integrated fix - https://github.com/twbs/bootstrap/issues/2752#}
+$modal.find('.collapse').on('hide', function (event) {
+  event.stopPropagation()
+});
+
+</script>
