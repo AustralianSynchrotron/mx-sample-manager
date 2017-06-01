@@ -18,6 +18,7 @@
                 <th scope="col">Unit Cell</th>
                 <th scope="col">No. Frames</th>
                 <th scope="col">Run Label</th>
+                <th scope="col">Overloaded</th>
                 <th scope="col">Directory</th>
                 <th scope="col">Status</th>
             </tr>
@@ -41,7 +42,7 @@
         </tbody>
         <!-- /ko -->
         <tbody data-bind="foreach: results">
-            <tr data-bind="style: { backgroundColor: type() == 'dataset' ? '#ffffff' : '#eeeeee' } ">
+          <tr data-bind="style: { backgroundColor: type() == 'dataset' ? '#ffffff' : overloaded() ? '#eecccc' : '#eeeeee' } ">
                 <td><input type="checkbox" name = "is_merge" value=" text: id" data-bind="checked: merge, enable: type() == 'dataset' && status() == 'Success'"></td>
                 <td><input type="radio" name = "is_reference" data-bind="checkedValue: id(), checked: reference, enable: type() == 'dataset' && status() == 'Success'"></td>
                 <td data-bind="click: $root.selectRow, text: sample().name"></td>
@@ -62,6 +63,12 @@
                 <!-- /ko -->
                 <!-- ko ifnot: $data.hasOwnProperty("run_label") -->
                      <td>-</td>
+                <!-- /ko -->
+                <!-- ko if: $data.hasOwnProperty("overloaded") -->
+                <td data-bind="click: $root.selectRow, text: overloaded"></td>
+                <!-- /ko -->
+                <!-- ko ifnot: $data.hasOwnProperty("overloaded") -->
+                <td>-</td>
                 <!-- /ko -->
                 <td data-bind="click: $root.selectRow, text: directory"></td>
                 <td>
