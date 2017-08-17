@@ -44,8 +44,8 @@
         <tbody data-bind="foreach: results">
           <tr data-bind="style: { backgroundColor: type() == 'dataset' ? '#ffffff' : typeof(overloaded) != 'undefined' && overloaded() ? '#eecccc' : '#eeeeee' } ">
 
-                <td><input type="checkbox" name = "is_merge" value=" text: id" data-bind="checked: merge, enable: type() == 'dataset' && status() == 'Success'"></td>
-                <td><input type="radio" name = "is_reference" data-bind="checkedValue: id(), checked: reference, enable: type() == 'dataset' && status() == 'Success'"></td>
+                <td><input type="checkbox" name = "is_merge" value=" text: id" data-bind="checked: merge, enable: type() == 'dataset' && status() == 'Success' && subtype() == 'p'"></td>
+                <td><input type="radio" name = "is_reference" data-bind="checkedValue: id(), checked: reference, enable: type() == 'dataset' && status() == 'Success' && subtype() == 'p'"></td>
                 <td data-bind="click: $root.selectRow, text: sample().name"></td>
                 <td data-bind="click: $root.selectRow, text: epn"></td>
                 <td data-bind="click: $root.selectRow, text: type" style="text-transform: capitalize;"></td>
