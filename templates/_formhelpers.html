@@ -20,17 +20,3 @@
         {%- set spaces=joiner(" ") -%}{% for parameter in unit_cell %}{{ spaces() }}{{ parameter }}{% endfor %}
     {% endif %}
 {%- endmacro %}
-
-{% macro render_overloads(overloadsmap) -%}
-    {% if overloadsmap != None %}
-    {% for value in overloadsmap|sort %}<p>% of max count rate: {{100 / value|float}}, {{overloadsmap[value]}} pixels.{% endfor %}
-    {% endif %}
-{% endmacro %}
-
-{% macro check_render_type(unit_cell) %}
-{% if unit_cell[0] != null %}
-   {{ render_unit_cell_units(unit_cell) }}
-  {% else %}
-  {{ render_overloads(unit_cell) }}
-  {% endif %}
-{%- endmacro %}

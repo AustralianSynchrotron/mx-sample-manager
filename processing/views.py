@@ -132,8 +132,6 @@ def view(_id):
     elif str(item['type']) == 'indexing':
         context['field_processing_overall'].extend(['mosaicity', 'indexing_refined_rmsd'])
 
-    if str(item['type']) == 'screening':
-        context['field_processing_overall'].append('overloads')
     template = 'processing/view_%s.twig.html' % str(item['type'])
     try:
         return render_template(template, **context)
