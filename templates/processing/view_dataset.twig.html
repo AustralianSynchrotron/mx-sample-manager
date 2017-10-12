@@ -107,7 +107,7 @@
           {%- endif %}
       </div>
   <div id="dataset-footer" class="modal-footer" data-bind="with: selectedRow">
-    <button type="button" data-bind="click: $root.retrigger" class="btn btn-primary">Setup retriggering</button>
+    <button type="button" data-bind="click: $root.retrigger, visible: subtype() == 'p'" class="btn btn-primary">Setup retriggering</button>
     <button type="button" data-dismiss="modal" class="btn">Close</button>
   </div>
 </div>
