@@ -1,12 +1,14 @@
 from flask import Blueprint, request, json, render_template
 from jinja2.exceptions import TemplateNotFound
 from bson import ObjectId, json_util
+import re
 
 from .. import localtime
 from ..plugins import mongo, vbl, beamline
 from ..utils import templated, jsonify, request_wants_json
 from .. import config
 
+from yaml import Loader, safe_load
 
 processing = Blueprint('processing', __name__, url_prefix='/processing')
 
@@ -153,15 +155,39 @@ def retrigger(_id):
     return context
 
 from rq import Queue
+def sanitize_uc(uc):
+    # return a valid unit cell or nothing
+    # some valid formats include  h,k,l,a,b,g [h k l a b g]
+    # there must be 6 numbers
+    values = re.split('[\[\(\)\]\,\ ]', uc)
+    uc_values = [float(value) for value in values if value != '']
+    assert(len(uc_values)==6)
+    for value in uc_values:
+    	if value <= 0:
+		raise ValueError('Unit cell value must be positive')
+    return '[{0[0]}, {0[1]}, {0[2]}, {0[3]}, {0[4]}, {0[5]}]'.format(uc_values)
 
+def sanitize_uc_sg(uc, sg):
+    with open('sg.yaml', 'r') as sg_text:
+        sg_dict = safe_load(sg_text)
+        good_sg = sg_dict.get(sg)
+        uc = sanitize_uc(uc)
+        return uc, good_sg
+    
 @processing.route("/retrigger/submit", methods=['POST'])
 def retrigger_submit():
     r = beamline.redis[beamline.current]
     q = Queue(config.REDIS_QUEUE_NAME, connection=r)
-    q.enqueue_call(func='mx_auto_dataset.dataset',
-                   kwargs=request.form.to_dict(flat=True),
+    kwargs = request.form.to_dict(flat=True)
+    uc, sg = sanitize_uc_sg(kwargs['unit_cell'], kwargs['space_group'])
+    if uc != None and sg != None:
+        kwargs['unit_cell'] = uc
+        kwargs['space_group'] = sg
+        q.enqueue_call(func='mx_auto_dataset.dataset',
+                   kwargs=kwargs,
                    timeout=1800)
-    return jsonify(result=request.form['dataset_id'])
+        return jsonify(result=request.form['dataset_id'])
+    print 'should pop up an error'
 
 
 @processing.route("/merging/submit", methods=['POST'])
