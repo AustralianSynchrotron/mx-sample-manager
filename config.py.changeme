@@ -19,6 +19,7 @@ INDEX_ENDPOINT = 'processing_list'
 
 # redis queue name for retriggered job
 REDIS_QUEUE_NAME = 'autodataset'
+#REDUS_QUEUE_NAME = 'autodataset_vkube' # for beamlines using vkube to process datasets
 
 # redis queue name for merge job
 MERGE_REDIS_QUEUE_NAME = 'merge'
