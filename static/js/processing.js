@@ -39,11 +39,11 @@ function listViewModel() {
                 $modal.modal('hide');
             }, 2000);
         }, 'json')
-         .fail(function() {
+         .fail(function(jqXHR,status,err) {
             $modal.modal('loading')
                  .find('.modal-body')
                  .prepend('<div class="alert alert-error fade in">' +
-                          'Failed to submit for reprocessing!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                          'Failed to submit for reprocessing! Are unit cell and space group in valid formats? For more info, check https://aswebmx.synchrotron.org.au/userwiki/index.php/AutoDataset#Useful_information_about_space_groups_and_unit_cell_parameters_for_retriggering<button type="button" class="close" data-dismiss="alert">&times;</button>' +
                           '</div>');
         });
     };

@@ -161,33 +161,34 @@ def sanitize_uc(uc):
     # there must be 6 numbers
     values = re.split('[\[\(\)\]\,\ ]', uc)
     uc_values = [float(value) for value in values if value != '']
-    assert(len(uc_values)==6)
+    if len(uc_values) != 6:
+        return None, 'Unit cell must have 6 values'
     for value in uc_values:
     	if value <= 0:
-		raise ValueError('Unit cell value must be positive')
-    return '[{0[0]}, {0[1]}, {0[2]}, {0[3]}, {0[4]}, {0[5]}]'.format(uc_values)
+            return None, 'Unit cell value must be positive'
+    return '[{0[0]}, {0[1]}, {0[2]}, {0[3]}, {0[4]}, {0[5]}]'.format(uc_values), None
 
 def sanitize_uc_sg(uc, sg):
     with open('sg.yaml', 'r') as sg_text:
         sg_dict = safe_load(sg_text)
         good_sg = sg_dict.get(sg)
-        uc = sanitize_uc(uc)
-        return uc, good_sg
+        uc, error = sanitize_uc(uc)
+        return uc, good_sg, error
     
 @processing.route("/retrigger/submit", methods=['POST'])
 def retrigger_submit():
     r = beamline.redis[beamline.current]
     q = Queue(config.REDIS_QUEUE_NAME, connection=r)
     kwargs = request.form.to_dict(flat=True)
-    uc, sg = sanitize_uc_sg(kwargs['unit_cell'], kwargs['space_group'])
-    if uc != None and sg != None:
+    uc, sg, error = sanitize_uc_sg(kwargs['unit_cell'], kwargs['space_group'])
+    if not error:
         kwargs['unit_cell'] = uc
         kwargs['space_group'] = sg
         q.enqueue_call(func='mx_auto_dataset.dataset',
                    kwargs=kwargs,
                    timeout=1800)
         return jsonify(result=request.form['dataset_id'])
-    print 'should pop up an error'
+    raise ValueError('Unit cell or space group not defined correctly: %s' % error)
 
 
 @processing.route("/merging/submit", methods=['POST'])
