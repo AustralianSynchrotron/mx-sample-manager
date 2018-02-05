@@ -49,11 +49,11 @@
 
       </tbody>
     </table>
-    <label class="checkbox"><input type="checkbox" name="ice" value="ice">Ice</label>
-    <label class="checkbox"><input type="checkbox" name="weak" value="weak" checked>Weak</label>
-    <label class="checkbox"><input type="checkbox" name="slow" value="slow">Slow</label>
-    <label class="checkbox"><input type="checkbox" name="brute" value="brute">Brute</label>
-    <label class="checkbox"><input type="checkbox" name="from_start" value="from_start">Start from scratch</label>
+    <label class="checkbox"><input type="checkbox" name="ice" title="remove resolutions where ice rings interfere during processing" value="ice">Ice</label>
+    <label class="checkbox"><input type="checkbox" name="weak" value="weak" checked title="optimal parameters and wider range for weak spots - true by default">Weak</label>
+    <label class="checkbox"><input type="checkbox" name="slow" value="slow" title="better but slower processing. do not use with brute - slow overrides brute">Slow</label>
+    <label class="checkbox"><input type="checkbox" name="brute" value="brute" title="use all images for indexing">Brute</label>
+    <label class="checkbox"><input type="checkbox" name="from_start" value="from_start" title="force retriggering to reprocess from scratch">Start from scratch</label>
     </form>
   </div>
   <div id="dataset-footer" class="modal-footer" data-bind="with: selectedRow">
