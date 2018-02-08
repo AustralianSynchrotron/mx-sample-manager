@@ -174,6 +174,8 @@ def sanitize_uc_sg(uc, sg):
         if not uc and not sg:
             return uc, sg, None
         good_sg = sg_dict.get(sg)
+        if not good_sg:
+            return None, 'Invalid space group name'
         uc, error = sanitize_uc(uc)
         return uc, good_sg, error
     
