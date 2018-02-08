@@ -171,6 +171,8 @@ def sanitize_uc(uc):
 def sanitize_uc_sg(uc, sg):
     with open('sg.yaml', 'r') as sg_text:
         sg_dict = safe_load(sg_text)
+        if not uc and not sg:
+            return uc, sg, None
         good_sg = sg_dict.get(sg)
         uc, error = sanitize_uc(uc)
         return uc, good_sg, error
