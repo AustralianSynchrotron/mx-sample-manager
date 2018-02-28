@@ -127,7 +127,7 @@ def view(_id):
                                   'space_group', 'ice', 'weak', 'slow', 'brute', 'from_start']
 
     if str(item['type']) == 'dataset' or str(item['type']) == 'screening':
-        context['field_order'] = [f for f in ['low_resolution_limit', 'high_resolution_limit', 'completeness', 'i/sigma', 'rmerge', 'rpim(i)', 'multiplicity'] if f in item.keys()]
+        context['field_order'] = [f for f in ['low_resolution_limit', 'high_resolution_limit', 'completeness', 'i/sigma', 'rmerge', 'rpim(i)', 'multiplicity', 'rmerge_plot'] if f in item.keys()]
         context['field_order'].extend(sorted([key for key, value in item.iteritems()
                                               if key not in context['field_order'] and isinstance(value, list) and len(value) <= 3]))
         context['field_processing_overall'].append('average_mosaicity')
@@ -153,6 +153,11 @@ def retrigger(_id):
 
     context = dict(item=item, name_unit=name_unit)
     return context
+
+@processing.route("/image/<string:name>")
+def image(name):
+    plot_img = beamline.redis[beamline.current].get(name)
+    return plot_img
 
 from rq import Queue
 def sanitize_uc(uc):

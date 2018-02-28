@@ -21,7 +21,8 @@ class Processing(Document):
         'success': bool,
         'completed': bool,
         'processing_dir': unicode,
-        'retrigger' : Retrigger
+        'retrigger' : Retrigger,
+	'rmerge_plot' : unicode
     }
 
     required_fields = ['sample', 'type', 'epn']
