@@ -18,8 +18,10 @@ NAVIGATION['processing_list']  = 'Processing'
 INDEX_ENDPOINT = 'processing_list'
 
 # redis queue name for retriggered job
-REDIS_QUEUE_NAME = 'autodataset'
-#REDUS_QUEUE_NAME = 'autodataset_vkube' # for beamlines using vkube to process datasets
+DATASET_REDIS_QUEUE_NAME = 'autodataset'
+#DATASET_REDIS_QUEUE_NAME = 'autodataset_vkube' # for beamlines using vkube to process datasets
+SCREENING_REDIS_QUEUE_NAME = 'screening'
+#SCREENING_REDIS_QUEUE_NAME = 'screening_vkube' # for beamlines using vkube to process screenings
 
 # redis queue name for merge job
 MERGE_REDIS_QUEUE_NAME = 'merge'

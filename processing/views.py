@@ -187,8 +187,16 @@ def sanitize_uc_sg(uc, sg):
 @processing.route("/retrigger/submit", methods=['POST'])
 def retrigger_submit():
     r = beamline.redis[beamline.current]
-    q = Queue(config.REDIS_QUEUE_NAME, connection=r)
     kwargs = request.form.to_dict(flat=True)
+    processing = mongo.db.processing.find_one({'_id': ObjectId(kwargs['dataset_id'])})
+
+    collection_type = processing['type']
+    if collection_type=='screening':
+        q = Queue(config.SCREENING_REDIS_QUEUE_NAME, connection=r)
+    elif collection_type == 'dataset':
+        q = Queue(config.DATASET_REDIS_QUEUE_NAME, connection=r)
+    else:
+        raise Exception('Unknown collection type')
     uc, sg, error = sanitize_uc_sg(kwargs['unit_cell'], kwargs['space_group'])
     if not error:
         kwargs['unit_cell'] = uc
