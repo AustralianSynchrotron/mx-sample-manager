@@ -22,7 +22,8 @@ class Processing(Document):
         'completed': bool,
         'processing_dir': unicode,
         'retrigger' : Retrigger,
-	'rmerge_plot' : unicode
+	'rmerge_plot' : unicode,
+        'scale_plot' : unicode
     }
 
     required_fields = ['sample', 'type', 'epn']
