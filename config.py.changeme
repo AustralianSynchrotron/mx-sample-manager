@@ -28,6 +28,10 @@ MERGE_REDIS_QUEUE_NAME = 'merge'
 
 MERGE_REDIS_METHOD_NAME = 'jobs.merger'
 
+# location for airflow pipeline
+PIPELINE_AIRFLOW_ADDRESS = '10.109.2.42'
+PIPELINE_AIRFLOW_PORT = '8080'
+
 BEAMLINE_NETWORKS = {
     'MX1':'10.109.0.0/16',
     'MX2':'10.108.0.0/16'

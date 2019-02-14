@@ -1,6 +1,7 @@
 from flask import Blueprint, request, json, render_template
 from jinja2.exceptions import TemplateNotFound
 from bson import ObjectId, json_util
+import requests
 import re
 
 from .. import localtime
@@ -207,6 +208,19 @@ def retrigger_submit():
         return jsonify(result=request.form['dataset_id'])
     raise ValueError('Unit cell or space group not defined correctly: %s' % error)
 
+@processing.route('/retrigger/airflow_submit', methods=['POST'])
+def retrigger_airflow_submit():
+    kwargs = request.form.to_dict(flat=True)
+    processing = mongo.db.processing.find_one({'_id': ObjectId(kwargs['dataset_id'])})
+    dag = b"dataset".decode('ascii')
+    run_conf = {
+        'EPN': processing['epn'],
+        'collection_id': str(mongo.db.collections.find_one({'_id': ObjectId(str(processing['collection_id'].id))})['_id']),
+        'last_frame': processing['last_frame']
+        }
+
+    requests.post("http://%s:%s/api/experimental/dags/%s/dag_runs" % (config.PIPELINE_AIRFLOW_ADDRESS, config.PIPELINE_AIRFLOW_PORT, dag), json=dict(conf=json.dumps(run_conf.update(kwargs))))
+    return jsonify(result=request.values)
 
 @processing.route("/merging/submit", methods=['POST'])
 def merge_submit():
