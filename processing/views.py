@@ -213,13 +213,11 @@ def retrigger_airflow_submit():
     kwargs = request.form.to_dict(flat=True)
     processing = mongo.db.processing.find_one({'_id': ObjectId(kwargs['dataset_id'])})
     dag = b"dataset".decode('ascii')
-    run_conf = {
-        'EPN': processing['epn'],
-        'collection_id': str(mongo.db.collections.find_one({'_id': ObjectId(str(processing['collection_id'].id))})['_id']),
-        'last_frame': processing['last_frame']
-        }
+    kwargs['EPN'] = processing['epn']
+    kwargs['collection_id'] = str(mongo.db.collections.find_one({'_id': ObjectId(str(processing['collection_id'].id))})['_id'])
+    kwargs['last_frame'] = processing['last_frame']
 
-    requests.post("http://%s:%s/api/experimental/dags/%s/dag_runs" % (config.PIPELINE_AIRFLOW_ADDRESS, config.PIPELINE_AIRFLOW_PORT, dag), json=dict(conf=json.dumps(run_conf.update(kwargs))))
+    requests.post("http://%s:%s/api/experimental/dags/%s/dag_runs" % (config.PIPELINE_AIRFLOW_ADDRESS, config.PIPELINE_AIRFLOW_PORT, dag), json=dict(conf=json.dumps(kwargs)))
     return jsonify(result=request.values)
 
 @processing.route("/merging/submit", methods=['POST'])
