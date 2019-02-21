@@ -215,7 +215,7 @@ def retrigger_airflow_submit():
     dag = b"dataset".decode('ascii')
     kwargs['EPN'] = processing['epn']
     kwargs['collection_id'] = str(mongo.db.collections.find_one({'_id': ObjectId(str(processing['collection_id'].id))})['_id'])
-    kwargs['last_frame'] = processing['last_frame']
+    kwargs['last_file'] = processing['last_frame']
 
     requests.post("http://%s:%s/api/experimental/dags/%s/dag_runs" % (config.PIPELINE_AIRFLOW_ADDRESS, config.PIPELINE_AIRFLOW_PORT, dag), json=dict(conf=json.dumps(kwargs)))
     return jsonify(result=request.values)
