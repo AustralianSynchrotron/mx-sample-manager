@@ -216,6 +216,12 @@ def retrigger_airflow_submit():
     kwargs['EPN'] = processing['epn']
     kwargs['collection_id'] = str(mongo.db.collections.find_one({'_id': ObjectId(str(processing['collection_id'].id))})['_id'])
     kwargs['last_file'] = processing['last_frame']
+    uc, sg, error = sanitize_uc_sg(kwargs['unit_cell'], kwargs['space_group'])
+    if not error:
+        kwargs['unit_cell'] = uc
+        kwargs['space_group'] = sg
+    else:
+	raise ValueError('Unit cell or space group not defined correctly: %s' % error)
 
     requests.post("http://%s:%s/api/experimental/dags/%s/dag_runs" % (config.PIPELINE_AIRFLOW_ADDRESS, config.PIPELINE_AIRFLOW_PORT, dag), json=dict(conf=json.dumps(kwargs)))
     return jsonify(result=request.values)
