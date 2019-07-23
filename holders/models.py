@@ -1,4 +1,4 @@
-from flask.ext.mongokit import Document
+from flask_mongokit import Document
 from mongokit import IS
 
 from ..projects.models import Sample

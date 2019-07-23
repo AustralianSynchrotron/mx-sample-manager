@@ -1,7 +1,7 @@
-from flask.ext.mongokit import MongoKit
-from flask.ext.pymongo import PyMongo
-from flask.ext.vbl import VBL
-from flask.ext.beamline import Beamline
+from flask_mongokit import MongoKit
+from flask_pymongo import PyMongo
+from flask_vbl import VBL
+from flask_beamline import Beamline
 from functools import wraps
 
 db = MongoKit()
