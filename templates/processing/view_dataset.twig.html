@@ -97,6 +97,8 @@
                 <tr><td><img src='{{url_for('.image', name=item.rmerge_plot)}}'></td></tr>
               {% elif key == 'scale_plot' %}
 	        <tr><td><img src='{{url_for('.image', name=item.scale_plot)}}'></td></tr>
+              {% elif key == 'xprep_graphs' %}
+                <tr><td><img src='{{url_for('.image', name=item.xprep_graphs)}}'></td></tr>
               {% elif not key.startswith('_') %}
               <tr>
                 <td style="text-transform: capitalize;">{{ key|replace('_', ' ')}} {%- if item[key][0] and item[key][1] and item[key][2] and name_unit[key] %} ({{ name_unit[key] }}) {% endif -%}</td>
