@@ -131,8 +131,7 @@ def view(_id):
         context['field_order'].extend(sorted([key for key, value in item.iteritems()
                                               if key not in context['field_order'] and isinstance(value, list) and len(value) <= 3]))
         context['field_processing_overall'].append('average_mosaicity')
-        if str(item['type']) == 'dataset' or str(item['type']) == 'screening': 
-	    context['field_processing_overall'].append('overloads')
+        context['field_processing_overall'].append('overloads')
     elif str(item['type']) == 'indexing':
         context['field_processing_overall'].extend(['mosaicity', 'indexing_refined_rmsd'])
 
